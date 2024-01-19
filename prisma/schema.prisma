@@ -45,7 +45,7 @@ model mst_mandatory_sss{
   amount_start Decimal @db.Decimal(18,5)
   amount_end Decimal @db.Decimal(18,5)
   employee_contribution_value Decimal @db.Decimal(18,5)
-  employeer_contribution_value Decimal @db.Decimal(18,5)
+  employer_contribution_value Decimal @db.Decimal(18,5)
   employee_ec_value Decimal @db.Decimal(18,5)
   remarks String @db.VarChar(255)
 }
