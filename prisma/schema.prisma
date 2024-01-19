@@ -18,15 +18,15 @@ model mst_user {
   password         String             @db.VarChar(50)
   fullname         String             @db.VarChar(255)
   phone_number     String             @db.VarChar(50)
-  created_by       Int @unique
+  created_by  Int?
+  createdBy    mst_user?   @relation("CreatedBy", fields: [created_by], references: [id])
+  created   mst_user[]  @relation("CreatedBy")
   create_date      DateTime
-  updated_by       Int  @unique
+  updated_by  Int?
+  updatedBy    mst_user?   @relation("UpdatedBy", fields: [updated_by], references: [id])
+  updated   mst_user[]  @relation("UpdatedBy")
   update_date      DateTime
   id_locked        Boolean
-  createdby mst_user? @relation("CreatedBy", fields: [created_by], references: [id])
-  mst_user mst_user?  @relation("CreatedBy")
-  updatedby mst_user? @relation("UpdatedBy", fields: [updated_by], references: [id])
-  mst_user1 mst_user?  @relation("UpdatedBy")
   mst_users_module mst_user_module[]
 
 }

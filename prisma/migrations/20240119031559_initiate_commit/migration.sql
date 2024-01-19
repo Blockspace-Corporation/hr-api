@@ -1,28 +1,4 @@
 -- CreateTable
-CREATE TABLE `User` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `username` VARCHAR(191) NOT NULL,
-    `password` VARCHAR(191) NOT NULL,
-    `firstName` VARCHAR(255) NOT NULL,
-    `lastName` VARCHAR(255) NOT NULL,
-    `email` VARCHAR(255) NOT NULL,
-    `contactNo` VARCHAR(191) NOT NULL,
-    `address` VARCHAR(191) NOT NULL,
-
-    UNIQUE INDEX `User_email_key`(`email`),
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
-CREATE TABLE `AccessToken` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `token` VARCHAR(191) NOT NULL,
-    `expiry` DATETIME(3) NOT NULL,
-
-    PRIMARY KEY (`id`)
-) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
--- CreateTable
 CREATE TABLE `mst_user` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `company_id` INTEGER NOT NULL,
@@ -30,11 +6,20 @@ CREATE TABLE `mst_user` (
     `password` VARCHAR(50) NOT NULL,
     `fullname` VARCHAR(255) NOT NULL,
     `phone_number` VARCHAR(50) NOT NULL,
-    `created_by` INTEGER NOT NULL,
+    `created_by` INTEGER NULL,
     `create_date` DATETIME(3) NOT NULL,
-    `updated_by` INTEGER NOT NULL,
+    `updated_by` INTEGER NULL,
     `update_date` DATETIME(3) NOT NULL,
     `id_locked` BOOLEAN NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `access_token` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `token` VARCHAR(50) NOT NULL,
+    `expiry` VARCHAR(50) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -63,6 +48,12 @@ CREATE TABLE `sys_module` (
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `mst_user` ADD CONSTRAINT `mst_user_created_by_fkey` FOREIGN KEY (`created_by`) REFERENCES `mst_user`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `mst_user` ADD CONSTRAINT `mst_user_updated_by_fkey` FOREIGN KEY (`updated_by`) REFERENCES `mst_user`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `mst_user_module` ADD CONSTRAINT `mst_user_module_user_id_fkey` FOREIGN KEY (`user_id`) REFERENCES `mst_user`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
