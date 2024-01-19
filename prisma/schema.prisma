@@ -145,3 +145,42 @@ model mst_tax_exemption_detail {
 }
 
 
+model mst_mandatory_bir{
+  id Int		@id	@default(autoincrement())
+  amount_start Decimal @db.Decimal(18,5)
+  amount_end Decimal @db.Decimal(18,5)
+  employee_tax_percentage Decimal @db.Decimal(18,5)
+  employee_additional_amount Decimal @db.Decimal(18,5)
+}
+
+model mst_mandatory_hdmf{
+  id Int		@id	@default(autoincrement())
+  amount_start Decimal @db.Decimal(18,5)
+  amount_end Decimal @db.Decimal(18,5)
+  employee_contribution_percentage Decimal @db.Decimal(18,5)
+  employer_contribution_percentage Decimal @db.Decimal(18,5)
+  employee_contribution_value Decimal @db.Decimal(18,5)
+  employer_contribution_value Decimal @db.Decimal(18,5)
+  remarks String @db.VarChar(255)
+}
+
+model mst_mandatory_phic{
+  id Int		@id	@default(autoincrement())
+  amount_start Decimal @db.Decimal(18,5)
+  amount_end Decimal @db.Decimal(18,5)
+  employee_contribution_value Decimal @db.Decimal(18,5)
+  employer_contribution_value Decimal @db.Decimal(18,5)
+  remarks String @db.VarChar(255)
+  employee_contribution_percentage Decimal @db.Decimal(18,5)
+  employer_contribution_percentage Decimal @db.Decimal(18,5)
+}
+
+model mst_mandatory_sss{
+  id Int		@id	@default(autoincrement())
+  amount_start Decimal @db.Decimal(18,5)
+  amount_end Decimal @db.Decimal(18,5)
+  employee_contribution_value Decimal @db.Decimal(18,5)
+  employer_contribution_value Decimal @db.Decimal(18,5)
+  employer_ec_value Decimal @db.Decimal(18,5)
+  remarks String @db.VarChar(255)
+}
