@@ -23,7 +23,7 @@ model must_account {
   id           Int     @id @default(autoincrement())
   account_code String  @db.VarChar(50)
   account_name String  @db.VarChar(255)
-  description  String  @db.VarChar(255)
+  description  String  @db.VarChar(65535)
   code         String  @db.VarChar(250)
 }
 
