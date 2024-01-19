@@ -10,20 +10,42 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-model User {
-  id			String		@id		@default(uuid())
-  username		String
-  password		String
-  firstName		String		@db.VarChar(255)
-  lastName		String		@db.VarChar(255)
-  email			String		@unique	@db.VarChar(255)
-  contactNo		String
-  address		String
+model mst_mandatory_bir{
+  id Int		@id	@default(autoincrement())
+  amount_start Decimal @db.Decimal(18,5)
+  amount_end Decimal @db.Decimal(18,5)
+  employee_tax_percentage Decimal @db.Decimal(18,5)
+  employee_additional_amount Decimal @db.Decimal(18,5)
 }
 
-model AccessToken {
-  id			String		@id		@default(uuid())
-  token			String
-  expiry		DateTime
+model mst_mandatory_hdmf{
+  id Int		@id	@default(autoincrement())
+  amount_start Decimal @db.Decimal(18,5)
+  amount_end Decimal @db.Decimal(18,5)
+  employee_contribution_percentage Decimal @db.Decimal(18,5)
+  employer_contribution_percentage Decimal @db.Decimal(18,5)
+  employee_contribution_value Decimal @db.Decimal(18,5)
+  employer_contribution_value Decimal @db.Decimal(18,5)
+  remarks String @db.VarChar(255)
+}
+
+model mst_mandatory_phic{
+  id Int		@id	@default(autoincrement())
+  amount_start Decimal @db.Decimal(18,5)
+  amount_end Decimal @db.Decimal(18,5)
+  employee_contribution_value Decimal @db.Decimal(18,5)
+  employer_contribution_value Decimal @db.Decimal(18,5)
+  remarks String @db.VarChar(255)
+  employee_contribution_percentage Decimal @db.Decimal(18,5)
+  employer_contribution_percentage Decimal @db.Decimal(18,5)
+}
+
+model mst_mandatory_sss{
+  id Int		@id	@default(autoincrement())
+  amount_start Decimal @db.Decimal(18,5)
+  amount_end Decimal @db.Decimal(18,5)
+  employee_contribution_value Decimal @db.Decimal(18,5)
+  employeer_contribution_value Decimal @db.Decimal(18,5)
+  employee_ec_value Decimal @db.Decimal(18,5)
+  remarks String @db.VarChar(255)
 }
