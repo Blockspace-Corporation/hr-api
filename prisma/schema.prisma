@@ -12,7 +12,7 @@ datasource db {
 
 model mst_user {
   id               Int                @id @default(autoincrement())
-  company_id       Int
+  company_id       Int?
   username         String             @db.VarChar(50)
   password         String             @db.VarChar(50)
   fullname         String             @db.VarChar(255)
@@ -57,6 +57,16 @@ model sys_module{
   module          String @db.VarChar(255) 
   particulars     String  @db.VarChar(255)
   mst_users_modules mst_user_module[]
+}
+model mst_code_table{
+  id              Int @id		@default(autoincrement())
+  code            String @db.VarChar(50)
+  value           String @db.VarChar(50)
+  category        String @db.VarChar(50)
+  created_by      Int?
+  created_date    DateTime?
+  update_by       Int?
+  update_date     DateTime?
 }
 
 model Company {
