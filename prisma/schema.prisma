@@ -27,3 +27,57 @@ model AccessToken {
   token			String
   expiry		DateTime
 }
+
+model Company {
+  id        Int @id @default(autoincrement())
+  company_code    String   @db.VarChar(50)
+  company         String   @db.VarChar(255)
+  address         String   @db.VarChar(255)
+  sss_number      String   @db.VarChar(50)
+  phic_number     String   @db.VarChar(50)
+  hdmf_number     String   @db.VarChar(50)
+  tax_number      String   @db.VarChar(50)
+  current_year_id   Int
+  minimum_overtime_hours  Decimal   @db.Decimal(18, 5)
+  create_by       Int
+  created_date    DateTime
+  update_by       Int
+  update_date     DateTime
+  is_locked       Boolean
+  funding_account   String    @db.VarChar(255)
+  sss_account_id    Int
+  hdmf_account_id   Int
+  phic_account_id   Int
+  tax_account_id    Int
+  image_url         String    @db.VarChar(255)
+  number_of_branches  Int
+  Requirements    String    @db.VarChar(255)
+  is_special_holiday_without_logs   Boolean
+  is_overtime_taxabale    Boolean
+  is_restday_taxable      Boolean
+  is_night_diff_taxable   Boolean
+  is_premium_taxable      Boolean
+  is_holiday_taxable      Boolean
+  is_additional_allowance_taxable   Boolean
+  is_shown_non_taxable_income       Boolean
+  is_show_loan_balance              Boolean
+  is_shown_monthly_rate             Boolean
+  is_payroll_type_fixed_compute_as_variable     Boolean
+  is_show_approved_by               Boolean
+  is_show_daily_rate                Boolean
+  is_regular_holiday_included_sss_contribution    Boolean
+  is_overtime_convertible_to_leave_credits        Boolean
+  is_show_payslip_other_income_detail             Boolean
+  is_phic_computation_based_ON_payroll_rate       Boolean
+  is_thirteen_month_included_restday_pay          Boolean
+  is_thirteen_month_included_overtime_pay         Boolean
+  is_thirteen_month_included_special_holiday_pay  Boolean
+  is_thirteen_month_included_regular_holiday_pay   Boolean
+  is_thirteen_month_included_absent_deduction     Boolean
+  is_thirteen_month_included_late_deduction       Boolean
+  is_thirteen_month_included_undertime_deduction   Boolean
+  is_payslip_daily_rate_from_payrolline           Boolean
+  is_shown_holiday_amount_payslip                 Boolean
+  is_multiple_breaks                              Boolean
+
+}
