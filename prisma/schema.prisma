@@ -60,3 +60,36 @@ model sys_module{
   mst_users_modules mst_user_module[]
 }
 
+model must_city {
+  id       Int     @id @default(autoincrement())
+  city     String  @db.VarChar(255)
+  province String  @db.VarChar(255)
+  region   String  @db.VarChar(255)
+  type     String  @db.VarChar(50)
+}
+
+model must_account {
+  id           Int     @id @default(autoincrement())
+  account_code String  @db.VarChar(50)
+  account_name String  @db.VarChar(255)
+  description  String  @db.VarChar(65535)
+  code         String  @db.VarChar(250)
+}
+
+model mst_tax_exemption {
+  id                  Int     @id @default(autoincrement())
+  tax_exemption_code String  @db.VarChar(50)
+  exemption_amount   Decimal @db.Decimal(18,5)
+  dependent_amount   Decimal @db.Decimal(18,5)
+}
+
+model mst_tax_exemption_detail {
+  id                Int     @id @default(autoincrement())
+  tax_exemption_id Int
+  type              String  @db.VarChar(50)
+  amount            Decimal @db.Decimal(18,5)
+  tax               Decimal @db.Decimal(18,5)
+  percentage        Decimal @db.Decimal(18,5)
+}
+
+
