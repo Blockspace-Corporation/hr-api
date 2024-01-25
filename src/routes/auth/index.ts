@@ -1,12 +1,9 @@
 import { FastifyPluginAsync } from 'fastify';
 import {
-  loginHandler,
   registerHandler,
 } from '../../controllers/AuthControllers';
 import {
-  IUserLoginRequestBody,
-  IUserLoginResponseError,
-  IUserLoginResponseSuccessful,
+ 
   IUserRegisterRequestBody,
   IUserRegisterResponseError,
   IUserRegisterResponseSucessful,
