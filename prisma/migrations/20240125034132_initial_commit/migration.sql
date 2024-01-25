@@ -103,7 +103,7 @@ CREATE TABLE `mst_employee_hr` (
     `division` VARCHAR(50) NOT NULL,
     `department` VARCHAR(50) NOT NULL,
     `position` VARCHAR(50) NOT NULL,
-    `default_ship_id` INTEGER NOT NULL,
+    `default_shift_id` INTEGER NOT NULL,
     `employee_status` VARCHAR(255) NULL,
     `approver_id` INTEGER NULL,
 
@@ -199,7 +199,7 @@ CREATE TABLE `Company` (
     `is_regular_holiday_included_sss_contribution` BOOLEAN NOT NULL,
     `is_overtime_convertible_to_leave_credits` BOOLEAN NOT NULL,
     `is_show_payslip_other_income_detail` BOOLEAN NOT NULL,
-    `is_phic_computation_based_ON_payroll_rate` BOOLEAN NOT NULL,
+    `is_phic_computation_based_on_payroll_rate` BOOLEAN NOT NULL,
     `is_thirteen_month_included_restday_pay` BOOLEAN NOT NULL,
     `is_thirteen_month_included_overtime_pay` BOOLEAN NOT NULL,
     `is_thirteen_month_included_special_holiday_pay` BOOLEAN NOT NULL,
@@ -259,7 +259,7 @@ CREATE TABLE `mst_tax_exemption_detail` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `mst_employee_other_incom` (
+CREATE TABLE `mst_employee_other_income` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `employee_id` INTEGER NOT NULL,
     `other_income_id` INTEGER NOT NULL,
@@ -359,6 +359,9 @@ ALTER TABLE `mst_user` ADD CONSTRAINT `mst_user_created_by_fkey` FOREIGN KEY (`c
 ALTER TABLE `mst_user` ADD CONSTRAINT `mst_user_updated_by_fkey` FOREIGN KEY (`updated_by`) REFERENCES `mst_user`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE `mst_user` ADD CONSTRAINT `mst_user_company_id_fkey` FOREIGN KEY (`company_id`) REFERENCES `Company`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE `mst_employee` ADD CONSTRAINT `mst_employee_city_id_fkey` FOREIGN KEY (`city_id`) REFERENCES `mst_city`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
@@ -392,7 +395,10 @@ ALTER TABLE `mst_user_module` ADD CONSTRAINT `mst_user_module_user_id_fkey` FORE
 ALTER TABLE `mst_user_module` ADD CONSTRAINT `mst_user_module_Module_id_fkey` FOREIGN KEY (`Module_id`) REFERENCES `sys_module`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `mst_employee_other_incom` ADD CONSTRAINT `mst_employee_other_incom_employee_id_fkey` FOREIGN KEY (`employee_id`) REFERENCES `mst_employee`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `mst_tax_exemption_detail` ADD CONSTRAINT `mst_tax_exemption_detail_tax_exemption_id_fkey` FOREIGN KEY (`tax_exemption_id`) REFERENCES `mst_tax_exemption`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `mst_employee_other_income` ADD CONSTRAINT `mst_employee_other_income_employee_id_fkey` FOREIGN KEY (`employee_id`) REFERENCES `mst_employee`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `mst_employee_history` ADD CONSTRAINT `mst_employee_history_employee_id_fkey` FOREIGN KEY (`employee_id`) REFERENCES `mst_employee`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

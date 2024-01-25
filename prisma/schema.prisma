@@ -11,337 +11,330 @@ datasource db {
 }
 
 model mst_user {
-  id               Int                @id @default(autoincrement())
-  company_id       Int?
-  username         String             @db.VarChar(50)
-  password         String             @db.VarChar(50)
-  fullname         String             @db.VarChar(255)
-  phone_number     String             @db.VarChar(50)
-  created_by  Int?
-  createdBy    mst_user?   @relation("CreatedBy", fields: [created_by], references: [id])
-  created   mst_user[]  @relation("CreatedBy")
-  create_date      DateTime
-  updated_by  Int?
-  updatedBy    mst_user?   @relation("UpdatedBy", fields: [updated_by], references: [id])
-  updated   mst_user[]  @relation("UpdatedBy")
-  update_date      DateTime
-  id_locked        Boolean
-  mst_users_modules mst_user_module[]
-   mst_employees          mst_employee[]
-created_mst_employees  mst_employee[] @relation("CreatedByEmployees")
-updated_mst_employees  mst_employee[] @relation("UpdatedByEmployees")
- mst_employee_hr mst_employee_hr[]
- mst_employee_history mst_employee_history[]
-
-
+  id                    Int                   @id @default(autoincrement())
+  company_id            Int?
+  username              String                @db.VarChar(50)
+  password              String                @db.VarChar(50)
+  fullname              String                @db.VarChar(255)
+  phone_number          String                @db.VarChar(50)
+  created_by            Int?
+  createdBy             mst_user?             @relation("CreatedBy", fields: [created_by], references: [id])
+  created               mst_user[]            @relation("CreatedBy")
+  create_date           DateTime
+  updated_by            Int?
+  updatedBy             mst_user?             @relation("UpdatedBy", fields: [updated_by], references: [id])
+  updated               mst_user[]            @relation("UpdatedBy")
+  update_date           DateTime
+  id_locked             Boolean
+  mst_users_modules     mst_user_module[]
+  mst_employees         mst_employee[]
+  created_mst_employees mst_employee[]        @relation("CreatedByEmployees")
+  updated_mst_employees mst_employee[]        @relation("UpdatedByEmployees")
+  mst_employee_hr       mst_employee_hr[]
+  mst_employee_history  mst_employee_history?
+  Company               Company?              @relation(fields: [company_id], references: [id])
 }
 
 model mst_employee {
-  id                      Int             @id @default(autoincrement())
-  employee_code           String          @db.VarChar(50)
-  id_number               String          @db.VarChar(50)
-  biometric_number        String          @db.VarChar(50)
-  last_name               String          @db.VarChar(255)
-  first_name              String          @db.VarChar(255)
-  middle_name             String          @db.VarChar(255)
-  extension_name          String          @db.VarChar(50)
-  full_name               String          @db.VarChar(255)
-  address                 String          @db.VarChar(65535)
-  city_id                 Int          
-  zid_code                String          @db.VarChar(50)
-  contact_number          String          @db.VarChar(50)
-  contact_mobile_number   String          @db.VarChar(50)   
-  email_adress            String          @db.VarChar(255)
-  date_of_birth           DateTime
-  place_of_birth          String          @db.VarChar(255)
-  sex                     String          @db.VarChar(50)
-  civil_status            String          @db.VarChar(50)
-  citizenship             String          @db.VarChar(50)
-  height                  Decimal         @db.Decimal(18,5)
-  weight                  Decimal         @db.Decimal(18,5)
-  blood_type              String          @db.VarChar(50)
-  religion                String          @db.VarChar(50)
-  remarks                 String?         @db.VarChar(65535)
-  Image_url               String          @db.VarChar(65535)
-  company_id              Int             
-  user_id                 Int            
-  created_by              Int      
-  created_date            DateTime
-  update_by               Int
-  update_date             DateTime
-  is_locked               Bytes      
-  mst_employee_payrolls mst_employee_payroll[]
-  mst_employees_other_income mst_employee_other_incom[]
-  mst_employees_history mst_employee_history[]
-  mst_employees_hrs mst_employee_hr[]
-
-  mst_city  mst_city @relation(fields: [city_id], references: [id])
-  Company  Company @relation(fields: [company_id], references: [id])
-  mst_user      mst_user @relation( fields: [user_id], references: [id])
-  created_by_user        mst_user   @relation("CreatedByEmployees", fields: [created_by], references: [id])
-  updated_by_user        mst_user   @relation("UpdatedByEmployees", fields: [update_by], references: [id])
+  id                         Int                         @id @default(autoincrement())
+  employee_code              String                      @db.VarChar(50)
+  id_number                  String                      @db.VarChar(50)
+  biometric_number           String                      @db.VarChar(50)
+  last_name                  String                      @db.VarChar(255)
+  first_name                 String                      @db.VarChar(255)
+  middle_name                String                      @db.VarChar(255)
+  extension_name             String                      @db.VarChar(50)
+  full_name                  String                      @db.VarChar(255)
+  address                    String                      @db.VarChar(65535)
+  city_id                    Int
+  zid_code                   String                      @db.VarChar(50)
+  contact_number             String                      @db.VarChar(50)
+  contact_mobile_number      String                      @db.VarChar(50)
+  email_adress               String                      @db.VarChar(255)
+  date_of_birth              DateTime
+  place_of_birth             String                      @db.VarChar(255)
+  sex                        String                      @db.VarChar(50)
+  civil_status               String                      @db.VarChar(50)
+  citizenship                String                      @db.VarChar(50)
+  height                     Decimal                     @db.Decimal(18, 5)
+  weight                     Decimal                     @db.Decimal(18, 5)
+  blood_type                 String                      @db.VarChar(50)
+  religion                   String                      @db.VarChar(50)
+  remarks                    String?                     @db.VarChar(65535)
+  Image_url                  String                      @db.VarChar(65535)
+  company_id                 Int
+  user_id                    Int
+  created_by                 Int
+  created_date               DateTime
+  update_by                  Int
+  update_date                DateTime
+  is_locked                  Bytes
+  mst_employee_payrolls      mst_employee_payroll[]
+  mst_employees_other_income mst_employee_other_income[]
+  mst_employees_history      mst_employee_history[]
+  mst_employees_hr           mst_employee_hr[]
+  mst_city                   mst_city                    @relation(fields: [city_id], references: [id])
+  Company                    Company                     @relation(fields: [company_id], references: [id])
+  mst_user                   mst_user                    @relation(fields: [user_id], references: [id])
+  created_by_user            mst_user                    @relation("CreatedByEmployees", fields: [created_by], references: [id])
+  updated_by_user            mst_user                    @relation("UpdatedByEmployees", fields: [update_by], references: [id])
 }
 
-model mst_employee_payroll{
-  id                      Int             @id @default(autoincrement())
-  employee_id             Int        
-  payroll_group           String          @db.VarChar(50)
-  payroll_type            String          @db.VarChar(50)
-  monthly_rate            Decimal         @db.Decimal(18,5)
-  payroll_rate            Decimal         @db.Decimal(18,5)
-  daily_rate              Decimal         @db.Decimal(18,5)
-  hourly_rate             Decimal         @db.Decimal(18,5)
-  absent_daily_rate       Decimal         @db.Decimal(18,5)
-  late_hourly_rate        Decimal         @db.Decimal(18,5)
-  undertime_hourly_rate   Decimal         @db.Decimal(18,5)     
-  overtime_hourly_rate    Decimal         @db.Decimal(18,5)
-  night_different_rate    Decimal         @db.Decimal(18,5)
-  sss_number              String          @db.VarChar(50)   
-  sss_add_on_amount       Decimal         @db.Decimal(18,5)
-  sss_computation_type    String          @db.VarChar(50)       
-  hdfm_number             String          @db.VarChar(50)
-  hdfm_add_on_amount      Decimal         @db.Decimal(18,5)
-  hdfm_computation_type   String          @db.VarChar(50)
-  phic_number             String          @db.VarChar(50)
-  tin                     String          @db.VarChar(50)
-  tax_table               String          @db.VarChar(50)
-  tax_exemption_id        Int        
-  is_minimum_wage_earner  Bytes 
-  atm_account_number      String          @db.VarChar(50)
-  cost_of_living_allowance  Decimal         @db.Decimal(18,5)
-  additional_allowance      Decimal         @db.Decimal(18,5)
-  account_id             Int?             
-  number_of_working_days Decimal         @db.Decimal(18,5)
-  mode_of_payment        String          @db.VarChar(50)
-  bank_name              String          @db.VarChar(50)
-  tax_add_on_amount      Decimal         @db.Decimal(18,5)
-  mst_employee mst_employee @relation(fields: [employee_id], references: [id])
-  mst_account mst_account? @relation(fields: [account_id], references: [id])
- 
+model mst_employee_payroll {
+  id                       Int          @id @default(autoincrement())
+  employee_id              Int
+  payroll_group            String       @db.VarChar(50)
+  payroll_type             String       @db.VarChar(50)
+  monthly_rate             Decimal      @db.Decimal(18, 5)
+  payroll_rate             Decimal      @db.Decimal(18, 5)
+  daily_rate               Decimal      @db.Decimal(18, 5)
+  hourly_rate              Decimal      @db.Decimal(18, 5)
+  absent_daily_rate        Decimal      @db.Decimal(18, 5)
+  late_hourly_rate         Decimal      @db.Decimal(18, 5)
+  undertime_hourly_rate    Decimal      @db.Decimal(18, 5)
+  overtime_hourly_rate     Decimal      @db.Decimal(18, 5)
+  night_different_rate     Decimal      @db.Decimal(18, 5)
+  sss_number               String       @db.VarChar(50)
+  sss_add_on_amount        Decimal      @db.Decimal(18, 5)
+  sss_computation_type     String       @db.VarChar(50)
+  hdfm_number              String       @db.VarChar(50)
+  hdfm_add_on_amount       Decimal      @db.Decimal(18, 5)
+  hdfm_computation_type    String       @db.VarChar(50)
+  phic_number              String       @db.VarChar(50)
+  tin                      String       @db.VarChar(50)
+  tax_table                String       @db.VarChar(50)
+  tax_exemption_id         Int
+  is_minimum_wage_earner   Bytes
+  atm_account_number       String       @db.VarChar(50)
+  cost_of_living_allowance Decimal      @db.Decimal(18, 5)
+  additional_allowance     Decimal      @db.Decimal(18, 5)
+  account_id               Int?
+  number_of_working_days   Decimal      @db.Decimal(18, 5)
+  mode_of_payment          String       @db.VarChar(50)
+  bank_name                String       @db.VarChar(50)
+  tax_add_on_amount        Decimal      @db.Decimal(18, 5)
+  mst_employee             mst_employee @relation(fields: [employee_id], references: [id])
+  mst_account              mst_account? @relation(fields: [account_id], references: [id])
 }
 
 model mst_employee_hr {
-  id                      Int             @id @default(autoincrement())
-  employee_id             Int    
-  date_hired              DateTime
-  date_regular            DateTime
-  date_resigned           DateTime
-  branch                  String          @db.VarChar(50)
-  division                String          @db.VarChar(50)
-  department              String          @db.VarChar(50)
-  position                String          @db.VarChar(50)
-  default_ship_id         Int
-  employee_status         String?          @db.VarChar(255)
-  approver_id             Int?
-  mst_employees mst_employee @relation(fields: [employee_id], references: [id])
-  mst_users mst_user? @relation(fields: [approver_id], references: [id])
-
- 
+  id               Int          @id @default(autoincrement())
+  employee_id      Int
+  date_hired       DateTime
+  date_regular     DateTime
+  date_resigned    DateTime
+  branch           String       @db.VarChar(50)
+  division         String       @db.VarChar(50)
+  department       String       @db.VarChar(50)
+  position         String       @db.VarChar(50)
+  default_shift_id Int
+  employee_status  String?      @db.VarChar(255)
+  approver_id      Int?
+  mst_employees    mst_employee @relation(fields: [employee_id], references: [id])
+  mst_users        mst_user?    @relation(fields: [approver_id], references: [id])
 }
 
-
-
-model access_token{
-  id        Int @id @default(autoincrement())
-  token     String @db.VarChar(50)
-  expiry    String @db.VarChar(50)
+model access_token {
+  id     Int    @id @default(autoincrement())
+  token  String @db.VarChar(50)
+  expiry String @db.VarChar(50)
 }
 
-model mst_user_module{
-  id              Int @id		@default(autoincrement())
-  mst_users   mst_user @relation(fields: [user_id], references: [id])
-  user_id         Int
-  Module_id       Int
+model mst_user_module {
+  id          Int        @id @default(autoincrement())
+  mst_users   mst_user   @relation(fields: [user_id], references: [id])
+  user_id     Int
+  Module_id   Int
   sys_modules sys_module @relation(fields: [Module_id], references: [id])
-  can_open        Boolean
-  can_add         Boolean
-  can_update      Boolean
-  can_lock        Boolean
-  can_unlock      Boolean
-  can_delete      Boolean
-  can_print       Boolean
+  can_open    Boolean
+  can_add     Boolean
+  can_update  Boolean
+  can_lock    Boolean
+  can_unlock  Boolean
+  can_delete  Boolean
+  can_print   Boolean
 }
 
-model sys_module{
-  id              Int @id		@default(autoincrement())
-  module          String @db.VarChar(255) 
-  particulars     String  @db.VarChar(255)
+model sys_module {
+  id                Int               @id @default(autoincrement())
+  module            String            @db.VarChar(255)
+  particulars       String            @db.VarChar(255)
   mst_users_modules mst_user_module[]
 }
-model mst_code_table{
-  id              Int @id		@default(autoincrement())
-  code            String @db.VarChar(50)
-  value           String @db.VarChar(50)
-  category        String @db.VarChar(50)
-  created_by      Int?
-  created_date    DateTime?
-  update_by       Int?
-  update_date     DateTime?
+
+model mst_code_table {
+  id           Int       @id @default(autoincrement())
+  code         String    @db.VarChar(50)
+  value        String    @db.VarChar(50)
+  category     String    @db.VarChar(50)
+  created_by   Int?
+  created_date DateTime?
+  update_by    Int?
+  update_date  DateTime?
 }
 
 model Company {
-  id        Int @id @default(autoincrement())
-  company_code    String   @db.VarChar(50)
-  company         String   @db.VarChar(255)
-  address         String   @db.VarChar(255)
-  sss_number      String   @db.VarChar(50)
-  phic_number     String   @db.VarChar(50)
-  hdmf_number     String   @db.VarChar(50)
-  tax_number      String   @db.VarChar(50)
-  current_year_id   Int
-  minimum_overtime_hours  Decimal   @db.Decimal(18, 5)
-  create_by       Int
-  created_date    DateTime
-  update_by       Int
-  update_date     DateTime
-  is_locked       Boolean
-  funding_account   String    @db.VarChar(255)
-  sss_account_id    Int
-  hdmf_account_id   Int
-  phic_account_id   Int
-  tax_account_id    Int
-  image_url         String    @db.VarChar(65535)
-  number_of_branches  Int
-  Requirements    String    @db.VarChar(65535)
-  is_special_holiday_without_logs   Boolean
-  is_overtime_taxabale    Boolean
-  is_restday_taxable      Boolean
-  is_night_diff_taxable   Boolean
-  is_premium_taxable      Boolean
-  is_holiday_taxable      Boolean
-  is_additional_allowance_taxable   Boolean
-  is_shown_non_taxable_income       Boolean
-  is_show_loan_balance              Boolean
-  is_shown_monthly_rate             Boolean
-  is_payroll_type_fixed_compute_as_variable     Boolean
-  is_show_approved_by               Boolean
-  is_show_daily_rate                Boolean
-  is_regular_holiday_included_sss_contribution    Boolean
-  is_overtime_convertible_to_leave_credits        Boolean
-  is_show_payslip_other_income_detail             Boolean
-  is_phic_computation_based_ON_payroll_rate       Boolean
-  is_thirteen_month_included_restday_pay          Boolean
-  is_thirteen_month_included_overtime_pay         Boolean
-  is_thirteen_month_included_special_holiday_pay  Boolean
-  is_thirteen_month_included_regular_holiday_pay   Boolean
-  is_thirteen_month_included_absent_deduction     Boolean
-  is_thirteen_month_included_late_deduction       Boolean
-  is_thirteen_month_included_undertime_deduction   Boolean
-  is_payslip_daily_rate_from_payrolline           Boolean
-  is_shown_holiday_amount_payslip                 Boolean
-  is_multiple_breaks                              Boolean
-  mst_employees mst_employee[]
+  id                                             Int            @id @default(autoincrement())
+  company_code                                   String         @db.VarChar(50)
+  company                                        String         @db.VarChar(255)
+  address                                        String         @db.VarChar(255)
+  sss_number                                     String         @db.VarChar(50)
+  phic_number                                    String         @db.VarChar(50)
+  hdmf_number                                    String         @db.VarChar(50)
+  tax_number                                     String         @db.VarChar(50)
+  current_year_id                                Int
+  minimum_overtime_hours                         Decimal        @db.Decimal(18, 5)
+  create_by                                      Int
+  created_date                                   DateTime
+  update_by                                      Int
+  update_date                                    DateTime
+  is_locked                                      Boolean
+  funding_account                                String         @db.VarChar(255)
+  sss_account_id                                 Int
+  hdmf_account_id                                Int
+  phic_account_id                                Int
+  tax_account_id                                 Int
+  image_url                                      String         @db.VarChar(65535)
+  number_of_branches                             Int
+  Requirements                                   String         @db.VarChar(65535)
+  is_special_holiday_without_logs                Boolean
+  is_overtime_taxabale                           Boolean
+  is_restday_taxable                             Boolean
+  is_night_diff_taxable                          Boolean
+  is_premium_taxable                             Boolean
+  is_holiday_taxable                             Boolean
+  is_additional_allowance_taxable                Boolean
+  is_shown_non_taxable_income                    Boolean
+  is_show_loan_balance                           Boolean
+  is_shown_monthly_rate                          Boolean
+  is_payroll_type_fixed_compute_as_variable      Boolean
+  is_show_approved_by                            Boolean
+  is_show_daily_rate                             Boolean
+  is_regular_holiday_included_sss_contribution   Boolean
+  is_overtime_convertible_to_leave_credits       Boolean
+  is_show_payslip_other_income_detail            Boolean
+  is_phic_computation_based_on_payroll_rate      Boolean
+  is_thirteen_month_included_restday_pay         Boolean
+  is_thirteen_month_included_overtime_pay        Boolean
+  is_thirteen_month_included_special_holiday_pay Boolean
+  is_thirteen_month_included_regular_holiday_pay Boolean
+  is_thirteen_month_included_absent_deduction    Boolean
+  is_thirteen_month_included_late_deduction      Boolean
+  is_thirteen_month_included_undertime_deduction Boolean
+  is_payslip_daily_rate_from_payrolline          Boolean
+  is_shown_holiday_amount_payslip                Boolean
+  is_multiple_breaks                             Boolean
+  mst_employees                                  mst_employee[]
+  mst_user                                       mst_user[]
 }
 
 model mst_city {
-  id       Int     @id @default(autoincrement())
-  city     String  @db.VarChar(255)
-  province String  @db.VarChar(255)
-  region   String  @db.VarChar(255)
-  type     String  @db.VarChar(50)
-  mst_employees  mst_employee[]
+  id            Int            @id @default(autoincrement())
+  city          String         @db.VarChar(255)
+  province      String         @db.VarChar(255)
+  region        String         @db.VarChar(255)
+  type          String         @db.VarChar(50)
+  mst_employees mst_employee[]
 }
 
 model mst_account {
-  id           Int     @id @default(autoincrement())
-  account_code String  @db.VarChar(50)
-  account_name String  @db.VarChar(255)
-  description  String  @db.VarChar(65535)
-  code         String  @db.VarChar(250)
+  id                    Int                    @id @default(autoincrement())
+  account_code          String                 @db.VarChar(50)
+  account_name          String                 @db.VarChar(255)
+  description           String                 @db.VarChar(65535)
+  code                  String                 @db.VarChar(250)
   mst_employees_payroll mst_employee_payroll[]
 }
 
 model mst_tax_exemption {
-  id                  Int     @id @default(autoincrement())
-  tax_exemption_code String  @db.VarChar(50)
-  exemption_amount   Decimal @db.Decimal(18,5)
-  dependent_amount   Decimal @db.Decimal(18,5)
+  id                       Int                        @id @default(autoincrement())
+  tax_exemption_code       String                     @db.VarChar(50)
+  exemption_amount         Decimal                    @db.Decimal(18, 5)
+  dependent_amount         Decimal                    @db.Decimal(18, 5)
+  mst_tax_exemption_detail mst_tax_exemption_detail[]
 }
 
 model mst_tax_exemption_detail {
-  id                Int     @id @default(autoincrement())
+  id                Int               @id @default(autoincrement())
   tax_exemption_id  Int
-  type              String  @db.VarChar(50)
-  amount            Decimal @db.Decimal(18,5)
-  tax               Decimal @db.Decimal(18,5)
-  percentage        Decimal @db.Decimal(18,5)
+  type              String            @db.VarChar(50)
+  amount            Decimal           @db.Decimal(18, 5)
+  tax               Decimal           @db.Decimal(18, 5)
+  percentage        Decimal           @db.Decimal(18, 5)
+  mst_tax_exemption mst_tax_exemption @relation(fields: [tax_exemption_id], references: [id])
 }
 
-model mst_employee_other_incom {
-  id                Int     @id @default(autoincrement())
-  employee_id       Int
-  other_income_id   Int
-  amount            Decimal @db.Decimal(18,5)
-  is_work_required  Bytes
-  is_active         Bytes
+model mst_employee_other_income {
+  id                     Int          @id @default(autoincrement())
+  employee_id            Int
+  other_income_id        Int
+  amount                 Decimal      @db.Decimal(18, 5)
+  is_work_required       Bytes
+  is_active              Bytes
   is_complete_attendance Bytes
-  mst_employee mst_employee @relation(fields: [employee_id], references: [id])
- 
+  mst_employee           mst_employee @relation(fields: [employee_id], references: [id])
 }
 
 model mst_employee_memo {
-  id                Int     @id @default(autoincrement())
-  employee_id       Int
-  memo_code         String  @db.VarChar(50)
-  memo_date         DateTime
-  particulars       String  @db.VarChar(65535)
-  attachment_url    String  @db.VarChar(65535)
-  attachment_type   String  @db.VarChar(50)
-
+  id              Int      @id @default(autoincrement())
+  employee_id     Int
+  memo_code       String   @db.VarChar(50)
+  memo_date       DateTime
+  particulars     String   @db.VarChar(65535)
+  attachment_url  String   @db.VarChar(65535)
+  attachment_type String   @db.VarChar(50)
 }
 
 model mst_employee_history {
-  id                Int     @id @default(autoincrement())
+  id                Int          @id @default(autoincrement())
   employee_id       Int
-  history_code      String  @db.VarChar(50)
+  history_code      String       @db.VarChar(50)
   history_date      DateTime
-  fieldname         String  @db.VarChar(255)
-  old_value          String  @db.VarChar(65535)
-  new_value    String  @db.VarChar(65535)
-  edited_by_user_id Int @unique
+  fieldname         String       @db.VarChar(255)
+  old_value         String       @db.VarChar(65535)
+  new_value         String       @db.VarChar(65535)
+  edited_by_user_id Int          @unique
   edited_time_stamp DateTime
-  mst_employee mst_employee @relation(fields: [employee_id], references: [id])
-  mst_user mst_user @relation(fields: [edited_by_user_id], references: [id])
-
+  mst_employee      mst_employee @relation(fields: [employee_id], references: [id])
+  mst_user          mst_user     @relation(fields: [edited_by_user_id], references: [id])
 }
 
-
-model mst_mandatory_bir{
-  id Int		@id	@default(autoincrement())
-  amount_start Decimal @db.Decimal(18,5)
-  amount_end Decimal @db.Decimal(18,5)
-  employee_tax_percentage Decimal @db.Decimal(18,5)
-  employee_additional_amount Decimal @db.Decimal(18,5)
+model mst_mandatory_bir {
+  id                         Int     @id @default(autoincrement())
+  amount_start               Decimal @db.Decimal(18, 5)
+  amount_end                 Decimal @db.Decimal(18, 5)
+  employee_tax_percentage    Decimal @db.Decimal(18, 5)
+  employee_additional_amount Decimal @db.Decimal(18, 5)
 }
 
-model mst_mandatory_hdmf{
-  id Int		@id	@default(autoincrement())
-  amount_start Decimal @db.Decimal(18,5)
-  amount_end Decimal @db.Decimal(18,5)
-  employee_contribution_percentage Decimal @db.Decimal(18,5)
-  employer_contribution_percentage Decimal @db.Decimal(18,5)
-  employee_contribution_value Decimal @db.Decimal(18,5)
-  employer_contribution_value Decimal @db.Decimal(18,5)
-  remarks String @db.VarChar(255)
+model mst_mandatory_hdmf {
+  id                               Int     @id @default(autoincrement())
+  amount_start                     Decimal @db.Decimal(18, 5)
+  amount_end                       Decimal @db.Decimal(18, 5)
+  employee_contribution_percentage Decimal @db.Decimal(18, 5)
+  employer_contribution_percentage Decimal @db.Decimal(18, 5)
+  employee_contribution_value      Decimal @db.Decimal(18, 5)
+  employer_contribution_value      Decimal @db.Decimal(18, 5)
+  remarks                          String  @db.VarChar(255)
 }
 
-model mst_mandatory_phic{
-  id Int		@id	@default(autoincrement())
-  amount_start Decimal @db.Decimal(18,5)
-  amount_end Decimal @db.Decimal(18,5)
-  employee_contribution_value Decimal @db.Decimal(18,5)
-  employer_contribution_value Decimal @db.Decimal(18,5)
-  remarks String @db.VarChar(255)
-  employee_contribution_percentage Decimal @db.Decimal(18,5)
-  employer_contribution_percentage Decimal @db.Decimal(18,5)
+model mst_mandatory_phic {
+  id                               Int     @id @default(autoincrement())
+  amount_start                     Decimal @db.Decimal(18, 5)
+  amount_end                       Decimal @db.Decimal(18, 5)
+  employee_contribution_value      Decimal @db.Decimal(18, 5)
+  employer_contribution_value      Decimal @db.Decimal(18, 5)
+  remarks                          String  @db.VarChar(255)
+  employee_contribution_percentage Decimal @db.Decimal(18, 5)
+  employer_contribution_percentage Decimal @db.Decimal(18, 5)
 }
 
-model mst_mandatory_sss{
-  id Int		@id	@default(autoincrement())
-  amount_start Decimal @db.Decimal(18,5)
-  amount_end Decimal @db.Decimal(18,5)
-  employee_contribution_value Decimal @db.Decimal(18,5)
-  employer_contribution_value Decimal @db.Decimal(18,5)
-  employer_ec_value Decimal @db.Decimal(18,5)
-  remarks String @db.VarChar(255)
+model mst_mandatory_sss {
+  id                          Int     @id @default(autoincrement())
+  amount_start                Decimal @db.Decimal(18, 5)
+  amount_end                  Decimal @db.Decimal(18, 5)
+  employee_contribution_value Decimal @db.Decimal(18, 5)
+  employer_contribution_value Decimal @db.Decimal(18, 5)
+  employer_ec_value           Decimal @db.Decimal(18, 5)
+  remarks                     String  @db.VarChar(255)
 }
