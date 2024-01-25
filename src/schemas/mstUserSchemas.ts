@@ -11,14 +11,18 @@ export interface IUserLoginResponseError {
 }
 
 export interface IUserRegisterRequestBody {
-  username: string;
-  password: string;
-  confirmPassword: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  contactNo: string;
-  address: string;
+  company_id:            number
+  username:              string;
+  password:              string;
+  fullname:              string;
+  phone_number:          string;
+  created_by:            number;
+  create_date:           Date;
+  updated_by:            number;
+  update_date:           Date;
+  id_locked:             boolean;
+ 
+
 }
 export interface IUserRegisterResponseSucessful {
   message: string;
@@ -26,4 +30,8 @@ export interface IUserRegisterResponseSucessful {
 export interface IUserRegisterResponseError {
   status: number;
   message: string;
+}
+
+export interface IUserID {
+  id: number;
 }
