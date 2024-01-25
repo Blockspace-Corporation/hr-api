@@ -3,17 +3,17 @@ import Company from '../models/Company';
 
 export default class CompanyRepository {
     static getCompanyById = async (companyId: number) => {
-        const targetEmployee = await prisma.company.findFirst({
+        const targetCompany = await prisma.company.findFirst({
           where: {
-            company_id: companyId,
+            id: companyId,
           },
         });
     
-        if (!targetEmployee) {
+        if (!targetCompany) {
           throw 'getEmployeeById: User not found';
         }
     
-        return targetEmployee;
+        return targetCompany;
     };
         
       static registerCompany = async (companyData: Company) => {
@@ -183,7 +183,7 @@ export default class CompanyRepository {
                 is_night_diff_taxable:companyData.is_night_diff_taxable,                         
                 is_premium_taxable:companyData.is_premium_taxable,                            
                 is_holiday_taxable:companyData.is_holiday_taxable, 
-                is_addtional_allowance_taxable:companyData.is_additional_allowance_taxable,                          
+                is_additional_allowance_taxable:companyData.is_additional_allowance_taxable,                          
                 is_shown_non_taxable_income:companyData.is_shown_non_taxable_income,                   
                 is_show_loan_balance:companyData.is_show_loan_balance,                           
                 is_shown_monthly_rate:companyData.is_shown_monthly_rate,                          
