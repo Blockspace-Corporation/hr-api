@@ -1,3 +1,5 @@
+import { mst_user, mst_user_module, mst_employee, mst_employee_hr, mst_employee_history, Company } from "@prisma/client";
+
 export interface IUserLoginRequestBody {
   username: string;
   password: string;
@@ -21,6 +23,15 @@ export interface IUserRegisterRequestBody {
   updated_by:            number;
   update_date:           Date;
   id_locked:             boolean;
+  created:               mst_user[]
+updated:               mst_user[]
+mst_users_modules:     mst_user_module[]
+  mst_employees:         mst_employee[]
+  created_mst_employees: mst_employee[]      
+  updated_mst_employees: mst_employee[]       
+  mst_employee_hr:       mst_employee_hr[]
+  mst_employee_history:  mst_employee_history[]
+  Company:               Company[]          
  
 
 }

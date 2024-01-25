@@ -1,55 +1,17 @@
-import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
-import * as bcrypt from 'bcrypt';
-import { add, getUnixTime } from 'date-fns';
+import {FastifyReply, FastifyRequest } from 'fastify';
 import {
-  IUserLoginRequestBody,
+
   IUserRegisterRequestBody,
   IUserID
 } from '../schemas/mstUserSchemas';
 import AuthRepository from '../repositories/MstUserRepository';
 
-export const loginHandler =
-  (fastify: FastifyInstance) =>
-  async (request: FastifyRequest, reply: FastifyReply) => {
-    const requestBody = request.body as IUserLoginRequestBody;
-
-    let targetUser: any;
-
-    try {
-      targetUser = await AuthRepository.getUserByUsername(requestBody.username);
-    } catch (error) {
-      console.error(`loginHandler: error trying to get user: ${error}`);
-      return reply.badRequest('Invalid username or password.');
-    }
-
-    const isCorrectPassword = await bcrypt.compare(
-      requestBody.password,
-      targetUser.password
-    );
-
-    if (!isCorrectPassword) {
-      return reply.badRequest('Invalid username or password.');
-    }
-
-    const tokenExpiryDateTime = add(new Date(), { hours: 2 });
-    const userId = targetUser.id;
-
-    const newAccessToken = fastify.jwt.sign({
-      aud: userId,
-      exp: getUnixTime(tokenExpiryDateTime),
-    });
-
-    return reply.send({
-      accessToken: newAccessToken,
-    });
-  };
 
 export const registerHandler = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   const requestBody = request.body as IUserRegisterRequestBody;
-
   if (
     !requestBody ||
     !requestBody.company_id ||
@@ -57,19 +19,18 @@ export const registerHandler = async (
     !requestBody.password ||       
     !requestBody.fullname ||  
     !requestBody.phone_number ||      
-    !requestBody.created_by ||
     !requestBody.create_date ||
-    !requestBody.updated_by ||
     !requestBody.update_date ||
     !requestBody.id_locked ||
     !requestBody
 
   ) {
     return reply.badRequest(
-      `Invalid request body. Required fields: 'company_id', 'username', 'password', 'fullname', 'phone_number', 'created_by', 'create_date', updated_by', 'update_date', 'id_locked'`
+      `Invalid request body. Required fields: 'company_id', 'username', 'password', 'fullname', 'phone_number', 'create_date',  'update_date', 'id_locked'`
     );
   }
 
+ 
 
   try {
     AuthRepository.createUser({

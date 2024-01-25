@@ -224,8 +224,10 @@ model Company {
   is_payslip_daily_rate_from_payrolline          Boolean
   is_shown_holiday_amount_payslip                Boolean
   is_multiple_breaks                             Boolean
-  mst_employees                                  mst_employee[]
-  mst_user                                       mst_user[]
+   mst_employees                                  mst_employee[]
+    mst_user                                      mst_user[]
+
+
 }
 
 model mst_city {
