@@ -42,7 +42,3 @@ export interface IUserRegisterResponseError {
   status: number;
   message: string;
 }
-
-export interface IUserID {
-  id: number;
-}
