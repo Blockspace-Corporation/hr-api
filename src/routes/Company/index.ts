@@ -11,17 +11,17 @@ const company: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     fastify.put<{
         Querystring: FastifyRequest;
         Reply: FastifyReply;
-    }>('/:id', { onRequest: [fastify.authenticate] }, updateCompanyHandler);
+    }>('/:id',  updateCompanyHandler);
   
     fastify.delete<{
         Querystring: FastifyRequest;
         Reply: FastifyReply;
-    }>('/:id', { onRequest: [fastify.authenticate] }, deleteCompanyHandler);
+    }>('/:id',  deleteCompanyHandler);
 
     fastify.get<{
         Querystring: FastifyRequest;
         Reply: FastifyReply
-    }>('/', { onRequest: [fastify.authenticate] }, readAllCompany);
+    }>('/',  readAllCompany);
 
 };
 
