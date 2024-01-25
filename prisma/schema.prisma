@@ -45,7 +45,7 @@ model mst_employee {
   middle_name                String                      @db.VarChar(255)
   extension_name             String                      @db.VarChar(50)
   full_name                  String                      @db.VarChar(255)
-  address                    String                      @db.VarChar(65535)
+  address                    String                      @db.LongText 
   city_id                    Int
   zid_code                   String                      @db.VarChar(50)
   contact_number             String                      @db.VarChar(50)
@@ -60,8 +60,8 @@ model mst_employee {
   weight                     Decimal                     @db.Decimal(18, 5)
   blood_type                 String                      @db.VarChar(50)
   religion                   String                      @db.VarChar(50)
-  remarks                    String?                     @db.VarChar(65535)
-  Image_url                  String                      @db.VarChar(65535)
+  remarks                    String?                     @db.LongText 
+  Image_url                  String                      @db.LongText 
   company_id                 Int
   user_id                    Int
   created_by                 Int
@@ -194,9 +194,9 @@ model Company {
   hdmf_account_id                                Int
   phic_account_id                                Int
   tax_account_id                                 Int
-  image_url                                      String         @db.VarChar(65535)
+  image_url                                      String         @db.LongText 
   number_of_branches                             Int
-  Requirements                                   String         @db.VarChar(65535)
+  Requirements                                   String         @db.LongText 
   is_special_holiday_without_logs                Boolean
   is_overtime_taxabale                           Boolean
   is_restday_taxable                             Boolean
@@ -241,7 +241,7 @@ model mst_account {
   id                    Int                    @id @default(autoincrement())
   account_code          String                 @db.VarChar(50)
   account_name          String                 @db.VarChar(255)
-  description           String                 @db.VarChar(65535)
+  description           String                 @db.LongText 
   code                  String                 @db.VarChar(250)
   mst_employees_payroll mst_employee_payroll[]
 }
@@ -280,8 +280,8 @@ model mst_employee_memo {
   employee_id     Int
   memo_code       String   @db.VarChar(50)
   memo_date       DateTime
-  particulars     String   @db.VarChar(65535)
-  attachment_url  String   @db.VarChar(65535)
+  particulars     String   @db.LongText 
+  attachment_url  String   @db.LongText 
   attachment_type String   @db.VarChar(50)
 }
 
@@ -291,8 +291,8 @@ model mst_employee_history {
   history_code      String       @db.VarChar(50)
   history_date      DateTime
   fieldname         String       @db.VarChar(255)
-  old_value         String       @db.VarChar(65535)
-  new_value         String       @db.VarChar(65535)
+  old_value         String       @db.LongText 
+  new_value         String       @db.LongText 
   edited_by_user_id Int          @unique
   edited_time_stamp DateTime
   mst_employee      mst_employee @relation(fields: [employee_id], references: [id])
