@@ -14,7 +14,7 @@ model mst_user {
   id                    Int                   @id @default(autoincrement())
   company_id            Int?
   username              String                @db.VarChar(50)
-  password              String                @db.VarChar(50)
+  password              String                @db.VarChar(255)
   fullname              String                @db.VarChar(255)
   phone_number          String                @db.VarChar(50)
   created_by            Int?
