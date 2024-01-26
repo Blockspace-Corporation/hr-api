@@ -4,6 +4,7 @@ export interface IMstUserModuleRequestBody {
     id:             number;
     user_id:        number;
     Module_id:      number;
+    mst_users:   mst_user[]
     can_open:       boolean;
     can_add:        boolean; 
     can_update:     boolean; 
@@ -11,7 +12,6 @@ export interface IMstUserModuleRequestBody {
     can_unlock:     boolean; 
     can_delete:     boolean; 
     can_print:      boolean; 
-    mst_users:   mst_user[]
     sys_modules: sys_module[]
 }
 

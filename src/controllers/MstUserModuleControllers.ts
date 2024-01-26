@@ -11,23 +11,7 @@ export const addmstusermoduleHandler = async (
   ) => {
     const requestBody = request.body as IMstUserModuleRequestBody;
   
-    if (
-      !requestBody ||
-      !requestBody.user_id ||
-      !requestBody.Module_id ||
-      !requestBody.can_open ||
-      !requestBody.can_add ||
-      !requestBody.can_update ||
-      !requestBody.can_lock ||
-      !requestBody.can_unlock ||
-      !requestBody.can_delete ||
-      !requestBody.can_print ||
-      !requestBody
-    ) {
-      return reply.badRequest(
-        `Invalid request body. Required fields: 'user_id', 'Module_id', 'can_open', 'can_add', 'can_update', 'can_lock', 'can_unlock', 'can_delete', 'can_print'`
-         );
-    }
+   
     try {
      const addMstUserModule = await MstUserModuleRepository.createMstUserModule({
             user_id: requestBody.user_id,
