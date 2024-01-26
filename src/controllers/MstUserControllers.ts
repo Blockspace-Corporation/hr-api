@@ -4,7 +4,7 @@ import {
   IUserRegisterRequestBody,
   IUserID
 } from '../schemas/mstUserSchemas';
-import AuthRepository from '../repositories/MstUserRepository';
+import MstUserRepository from '../repositories/MstUserRepository';
 
 
 export const registerHandler = async (
@@ -33,7 +33,7 @@ export const registerHandler = async (
  
 
   try {
-    AuthRepository.createUser({
+    MstUserRepository.createUser({
       company_id: requestBody.company_id,
       username: requestBody.username,  
       password: requestBody.password,           
@@ -61,7 +61,7 @@ export const readAllUsers = async (
 ) => {
   try {
 
-    const targetLabels = await AuthRepository.viewUser();
+    const targetLabels = await MstUserRepository.viewUser();
 
     return reply.send({
       labels: targetLabels,
@@ -80,7 +80,7 @@ export const updateUserHandler = async (
 ) => {
   try {
     const query = request.body as IUserRegisterRequestBody;
-    const targetLabel = await AuthRepository.updateUser(query);
+    const targetLabel = await MstUserRepository.updateUser(query);
     return reply.send(targetLabel);
 
   } catch (error) {
@@ -102,7 +102,7 @@ export const deleteUserHandler = async (
       );
     }
 
-    await AuthRepository.deleteUser(requestParams.id);
+    await MstUserRepository.deleteUser(requestParams.id);
 
     return reply.send({
       message: 'Label has been removed successfully.',
