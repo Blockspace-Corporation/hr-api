@@ -75,6 +75,7 @@ model mst_employee {
   mst_employees_other_income mst_employee_other_income[]
   mst_employees_history      mst_employee_history[]
   mst_employees_hr           mst_employee_hr[]
+  mst_year_leave_credits     mst_year_leave_credit[]
   mst_city                   mst_city                    @relation(fields: [city_id], references: [id])
   Company                    Company                     @relation(fields: [company_id], references: [id])
   mst_user                   mst_user                    @relation(fields: [user_id], references: [id])
@@ -355,6 +356,30 @@ model mst_year {
   update_by                   Int
   update_date                 DateTime
   is_locked                   Boolean
+  mst_year_dates              mst_year_date[]
+  mst_year_leave_credits      mst_year_leave_credit[]
   mst_users      mst_user  @relation("CreatedByEmployees", fields: [created_by], references: [id])
   mst_user       mst_user  @relation("UpdatedByEmployees", fields: [update_by], references: [id])
+}
+
+model mst_year_date {
+  id                          Int     @id @default(autoincrement())
+  year_id                     Int
+  year_date                   DateTime
+  branch                      String  @db.VarChar(50)
+  data_type                   String  @db.VarChar(50)
+  remarks                     String  @db.VarChar(255)
+  mst_years                   mst_year   @relation(fields: [year_id], references: [id])
+}
+
+model mst_year_leave_credit {
+  id                          Int     @id @default(autoincrement())
+  date_endoded                DateTime
+  year_id                     Int
+  employee_id                 Int
+  leave_credits               Decimal @db.Decimal(18, 5)
+  remarks                     String  @db.VarChar(255)
+  leave_type                  String  @db.VarChar(50)
+  mst_years                   mst_year   @relation(fields: [year_id], references: [id])
+  mst_employees               mst_employee @relation(fields: [employee_id], references: [id])
 }

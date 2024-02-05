@@ -13,7 +13,7 @@ export default class MstYearRepository {
                 year:userData.year,
                 date_start:userData.date_start,
                 date_end:userData.date_end,
-                is_closed:Buffer.from(userData.is_closed),
+                is_closed:userData.is_closed,
                 created_by:userData.created_by,
                 created_date:userData.created_date,
                 update_by:userData.update_by,
