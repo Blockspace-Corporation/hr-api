@@ -31,6 +31,8 @@ model mst_user {
   created_mst_employees mst_employee[]        @relation("CreatedByEmployees")
   updated_mst_employees mst_employee[]        @relation("UpdatedByEmployees")
   mst_employee_hr       mst_employee_hr[]
+   created_mst_years    mst_year[]        @relation("CreatedByEmployees")
+  updated_mst_years     mst_year[]        @relation("UpdatedByEmployees")
   mst_employee_history  mst_employee_history?
   Company               Company?              @relation(fields: [company_id], references: [id])
 }
@@ -339,4 +341,20 @@ model mst_mandatory_sss {
   employer_contribution_value Decimal @db.Decimal(18, 5)
   employer_ec_value           Decimal @db.Decimal(18, 5)
   remarks                     String  @db.VarChar(255)
+}
+
+model mst_year {
+  id                          Int     @id @default(autoincrement())
+  year_code                   String  @db.VarChar(50)
+  year                        String  @db.VarChar(50)
+  date_start                  DateTime
+  date_end                    DateTime
+  is_closed                   Boolean
+  created_by                  Int
+  created_date                DateTime
+  update_by                   Int
+  update_date                 DateTime
+  is_locked                   Boolean
+  mst_users      mst_user  @relation("CreatedByEmployees", fields: [created_by], references: [id])
+  mst_user       mst_user  @relation("UpdatedByEmployees", fields: [update_by], references: [id])
 }
