@@ -1,5 +1,5 @@
 import { FastifyPluginAsync,FastifyReply, FastifyRequest } from 'fastify';
-import { registerHandler, updateUserHandler, deleteUserHandler, readAllUsers } from '../../controllers/MstUserControllers';
+import { registerHandler, updateUserHandler, deleteUserHandler, readAllUsers, readOneUserHandler } from '../../controllers/MstUserControllers';
 import { IUserRegisterRequestBody } from '../../schemas/mstUserSchemas';
 
 const mst_user: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
@@ -22,6 +22,11 @@ const mst_user: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
         Querystring: FastifyRequest;
         Reply: FastifyReply
     }>('/',  readAllUsers);
+
+    fastify.get<{
+        Querystring: FastifyRequest;
+        Reply: FastifyReply
+    }>('/:id',  readOneUserHandler);
 
 };
 

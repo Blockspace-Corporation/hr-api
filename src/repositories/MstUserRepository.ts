@@ -28,6 +28,15 @@ export default class AuthRepository {
     }
   };
 
+  static getOneUserId = async (id: number)=>{
+    const targetTeams = await prisma.mst_user.findFirst({
+      where:{
+        id: id
+      }
+    })
+    return targetTeams;
+  }
+
   static viewUser = async()=>{
     try {
       const allLabels = await prisma.mst_user.findMany({})

@@ -55,6 +55,35 @@ export const registerHandler = async (
   });
 };
 
+export const readOneUserHandler = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+
+
+  const requestParams = request.params as IUserRegisterRequestBody;
+  if (!requestParams || !requestParams.id) {
+    return reply.badRequest("Missing 'id' parameter in URL 'MstUser/:id'");
+  }
+  try {
+    let id: number = Number(requestParams.id)
+    const targetOneUser = await MstUserRepository.getOneUserId(
+      id
+    );
+
+    if (!targetOneUser) {
+      return reply.notFound('MstUser not found.');
+    }
+
+    return reply.send({ data: targetOneUser });
+  } catch (error) {
+    console.error(
+      `Read One Mst User ID: error trying to read MstUser: ${error}`
+    );
+    reply.internalServerError(String(error || 'Unknown error occurred.'));
+  }
+};
+
 export const readAllUsers = async (
   request: FastifyRequest,
   reply: FastifyReply

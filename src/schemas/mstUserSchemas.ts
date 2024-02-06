@@ -13,7 +13,8 @@ export interface IUserLoginResponseError {
 }
 
 export interface IUserRegisterRequestBody {
-  company_id:            number
+  id:                    number;
+  company_id:            number;
   username:              string;
   password:              string;
   fullname:              string;
