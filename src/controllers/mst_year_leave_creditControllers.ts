@@ -1,51 +1,45 @@
 import {FastifyReply, FastifyRequest } from 'fastify';
 import {
 
-  MstYearRequestBody,
-  MstYearID
-} from '../schemas/mst_year_Schemas';
-import MstYearRepository from '../repositories/mst_year_Repository';
+  MstYearLeaveRequestBody,
+  MstYearLeave
+} from '../schemas/mst_year_leave_credit_Schemas';
+
+import MstYearLeaveRepository from '../repositories/mst_year_leave_creditRepository';
 
 
 export const registerHandler = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  const requestBody = request.body as MstYearRequestBody;
+  const requestBody = request.body as MstYearLeaveRequestBody;
   if (
     !requestBody ||
-    !requestBody.year_code ||
-    !requestBody.year ||
-    !requestBody.date_start ||       
-    !requestBody.date_end ||  
-    !requestBody.is_closed ||      
-    !requestBody.created_by ||
-    !requestBody.created_date ||
-    !requestBody.update_by ||
-    !requestBody.update_date ||
-    !requestBody.is_locked ||
+    !requestBody.date_encoded ||
+    !requestBody.year_id ||
+    !requestBody.employee_id ||       
+    !requestBody.leave_credits ||  
+    !requestBody.remarks||  
+    !requestBody.leave_type ||         
     !requestBody
 
   ) {
     return reply.badRequest(
-      `Invalid request body. Required fields: 'year_code', 'year', 'datestart', 'date_end', 'is_closed', 'create_by','create_date', 'update_by', 'update_date', 'is_locked'`
+      `Invalid request body. Required fields: 'date_encoded', 'year_id', 'employee_id', 'leave_credits', 'remarks', 'leave_type'`
     );
   }
 
  
 
   try {
-    MstYearRepository.createMstYear({
-        year_code:requestBody.year_code, 
-        year:requestBody.year,
-        date_start:requestBody.date_start,       
-        date_end:requestBody.date_end, 
-        is_closed:requestBody.is_closed,     
-        created_by:requestBody.created_by,
-        created_date:requestBody.created_date,
-        update_by:requestBody.update_by,
-        update_date:requestBody.update_date,
-        is_locked:requestBody.is_locked,
+    MstYearLeaveRepository.createMstYearLeave({
+
+        date_encoded:requestBody.date_encoded,      
+        year_id:requestBody.year_id,
+        employee_id:requestBody. employee_id,
+        leave_credits:requestBody. leave_credits,
+        remarks:requestBody.remarks,
+        leave_type:requestBody.leave_type,
     });
 
   } catch (error) {
@@ -57,18 +51,18 @@ export const registerHandler = async (
   });
 };
 
-export const readOneYearHandler = async (
+export const readOneYearLeaveHandler = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   try {
-    const requestParams = request.params as MstYearRequestBody;
+    const requestParams = request.params as MstYearLeaveRequestBody;
     requestParams.id = Number(requestParams.id);
     if (!requestParams || !requestParams.id) {
       return reply.badRequest("Missing 'id' parameter in URI 'company/:id'");
     }
 
-    const targetUser = await MstYearRepository.getMstByYear(requestParams.id);
+    const targetUser = await MstYearLeaveRepository.getMstYearLeave(requestParams.id);
 
     if (!targetUser) {
       return reply.notFound('User not found.');
@@ -83,13 +77,13 @@ export const readOneYearHandler = async (
   }
 };
 
-export const readAllYear = async (
+export const readAllYearLeave = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   try {
 
-    const targetLabels = await MstYearRepository.viewYear();
+    const targetLabels = await MstYearLeaveRepository.viewYearLeave();
 
     return reply.send({
       labels: targetLabels,
@@ -102,13 +96,13 @@ export const readAllYear = async (
   }
 };
 
-export const updateYearHandler = async (
+export const updateYearLeaveHandler = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   try {
-    const query = request.body as MstYearRequestBody;
-    const targetLabel = await MstYearRepository.updateYear(query);
+    const query = request.body as MstYearLeaveRequestBody;
+    const targetLabel = await MstYearLeaveRepository.updateYearLeave(query);
     return reply.send(targetLabel);
 
   } catch (error) {
@@ -117,12 +111,12 @@ export const updateYearHandler = async (
   }
 };
 
-export const deleteYearHandler = async (
+export const deleteYearLeaveHandler = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
   try {
-    const requestParams = request.params as MstYearID;
+    const requestParams = request.params as MstYearLeave;
     requestParams.id = Number(requestParams.id);
     if (!requestParams || !requestParams.id) {
       return reply.badRequest(
@@ -130,7 +124,7 @@ export const deleteYearHandler = async (
       );
     }
 
-    await MstYearRepository.deleteYear(requestParams.id);
+    await MstYearLeaveRepository.deleteYearLeave(requestParams.id);
 
     return reply.send({
       message: 'Label has been removed successfully.',
@@ -141,4 +135,6 @@ export const deleteYearHandler = async (
     reply.internalServerError(JSON.stringify(error));
   }
 };
+
+
 

@@ -1,5 +1,5 @@
 import { FastifyPluginAsync,FastifyReply, FastifyRequest } from 'fastify';
-import { registerHandler, updateYearHandler, deleteYearHandler, readAllYear } from '../../controllers/mst_year_Controller';
+import { registerHandler, updateYearHandler, deleteYearHandler, readAllYear, readOneYearHandler} from '../../controllers/mst_year_Controller';
 import { MstYearRequestBody } from '../../schemas/mst_year_Schemas';
 
 const mst_year: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
@@ -21,7 +21,16 @@ const mst_year: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
     fastify.get<{
         Querystring: FastifyRequest;
         Reply: FastifyReply
+      }>('/:id', readOneYearHandler);
+
+    fastify.get<{
+        Querystring: FastifyRequest;
+        Reply: FastifyReply
     }>('/',  readAllYear);
+
+    
+
+    
 
 };
 

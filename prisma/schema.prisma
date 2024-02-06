@@ -31,8 +31,8 @@ model mst_user {
   created_mst_employees mst_employee[]        @relation("CreatedByEmployees")
   updated_mst_employees mst_employee[]        @relation("UpdatedByEmployees")
   mst_employee_hr       mst_employee_hr[]
-   created_mst_years    mst_year[]        @relation("CreatedByEmployees")
-  updated_mst_years     mst_year[]        @relation("UpdatedByEmployees")
+  created_mst_years     mst_year[]            @relation("CreatedByEmployees")
+  updated_mst_years     mst_year[]            @relation("UpdatedByEmployees")
   mst_employee_history  mst_employee_history?
   Company               Company?              @relation(fields: [company_id], references: [id])
 }
@@ -47,7 +47,7 @@ model mst_employee {
   middle_name                String                      @db.VarChar(255)
   extension_name             String                      @db.VarChar(50)
   full_name                  String                      @db.VarChar(255)
-  address                    String                      @db.LongText 
+  address                    String                      @db.LongText
   city_id                    Int
   zid_code                   String                      @db.VarChar(50)
   contact_number             String                      @db.VarChar(50)
@@ -62,8 +62,8 @@ model mst_employee {
   weight                     Decimal                     @db.Decimal(18, 5)
   blood_type                 String                      @db.VarChar(50)
   religion                   String                      @db.VarChar(50)
-  remarks                    String?                     @db.LongText 
-  Image_url                  String                      @db.LongText 
+  remarks                    String?                     @db.LongText
+  Image_url                  String                      @db.LongText
   company_id                 Int
   user_id                    Int
   created_by                 Int
@@ -197,9 +197,9 @@ model Company {
   hdmf_account_id                                Int
   phic_account_id                                Int
   tax_account_id                                 Int
-  image_url                                      String         @db.LongText 
+  image_url                                      String         @db.LongText
   number_of_branches                             Int
-  Requirements                                   String         @db.LongText 
+  Requirements                                   String         @db.LongText
   is_special_holiday_without_logs                Boolean
   is_overtime_taxabale                           Boolean
   is_restday_taxable                             Boolean
@@ -227,10 +227,8 @@ model Company {
   is_payslip_daily_rate_from_payrolline          Boolean
   is_shown_holiday_amount_payslip                Boolean
   is_multiple_breaks                             Boolean
-   mst_employees                                  mst_employee[]
-    mst_user                                      mst_user[]
-
-
+  mst_employees                                  mst_employee[]
+  mst_user                                       mst_user[]
 }
 
 model mst_city {
@@ -246,7 +244,7 @@ model mst_account {
   id                    Int                    @id @default(autoincrement())
   account_code          String                 @db.VarChar(50)
   account_name          String                 @db.VarChar(255)
-  description           String                 @db.LongText 
+  description           String                 @db.LongText
   code                  String                 @db.VarChar(250)
   mst_employees_payroll mst_employee_payroll[]
 }
@@ -285,8 +283,8 @@ model mst_employee_memo {
   employee_id     Int
   memo_code       String   @db.VarChar(50)
   memo_date       DateTime
-  particulars     String   @db.LongText 
-  attachment_url  String   @db.LongText 
+  particulars     String   @db.LongText
+  attachment_url  String   @db.LongText
   attachment_type String   @db.VarChar(50)
 }
 
@@ -296,8 +294,8 @@ model mst_employee_history {
   history_code      String       @db.VarChar(50)
   history_date      DateTime
   fieldname         String       @db.VarChar(255)
-  old_value         String       @db.LongText 
-  new_value         String       @db.LongText 
+  old_value         String       @db.LongText
+  new_value         String       @db.LongText
   edited_by_user_id Int          @unique
   edited_time_stamp DateTime
   mst_employee      mst_employee @relation(fields: [employee_id], references: [id])
@@ -345,41 +343,41 @@ model mst_mandatory_sss {
 }
 
 model mst_year {
-  id                          Int     @id @default(autoincrement())
-  year_code                   String  @db.VarChar(50)
-  year                        String  @db.VarChar(50)
-  date_start                  DateTime
-  date_end                    DateTime
-  is_closed                   Boolean
-  created_by                  Int
-  created_date                DateTime
-  update_by                   Int
-  update_date                 DateTime
-  is_locked                   Boolean
-  mst_year_dates              mst_year_date[]
-  mst_year_leave_credits      mst_year_leave_credit[]
-  mst_users      mst_user  @relation("CreatedByEmployees", fields: [created_by], references: [id])
-  mst_user       mst_user  @relation("UpdatedByEmployees", fields: [update_by], references: [id])
+  id                     Int                     @id @default(autoincrement())
+  year_code              String                  @db.VarChar(50)
+  year                   String                  @db.VarChar(50)
+  date_start             DateTime
+  date_end               DateTime
+  is_closed              Boolean
+  created_by             Int
+  created_date           DateTime
+  update_by              Int
+  update_date            DateTime
+  is_locked              Boolean
+  mst_year_dates         mst_year_date[]
+  mst_year_leave_credits mst_year_leave_credit[]
+  mst_users              mst_user                @relation("CreatedByEmployees", fields: [created_by], references: [id])
+  mst_user               mst_user                @relation("UpdatedByEmployees", fields: [update_by], references: [id])
 }
 
 model mst_year_date {
-  id                          Int     @id @default(autoincrement())
-  year_id                     Int
-  year_date                   DateTime
-  branch                      String  @db.VarChar(50)
-  data_type                   String  @db.VarChar(50)
-  remarks                     String  @db.VarChar(255)
-  mst_years                   mst_year   @relation(fields: [year_id], references: [id])
+  id        Int      @id @default(autoincrement())
+  year_id   Int
+  year_date DateTime
+  branch    String   @db.VarChar(50)
+  data_type String   @db.VarChar(50)
+  remarks   String   @db.VarChar(255)
+  mst_years mst_year @relation(fields: [year_id], references: [id])
 }
 
 model mst_year_leave_credit {
-  id                          Int     @id @default(autoincrement())
-  date_endoded                DateTime
-  year_id                     Int
-  employee_id                 Int
-  leave_credits               Decimal @db.Decimal(18, 5)
-  remarks                     String  @db.VarChar(255)
-  leave_type                  String  @db.VarChar(50)
-  mst_years                   mst_year   @relation(fields: [year_id], references: [id])
-  mst_employees               mst_employee @relation(fields: [employee_id], references: [id])
+  id            Int          @id @default(autoincrement())
+  date_encoded  DateTime
+  year_id       Int
+  employee_id   Int
+  leave_credits Decimal      @db.Decimal(18, 5)
+  remarks       String       @db.VarChar(255)
+  leave_type    String       @db.VarChar(50)
+  mst_years     mst_year     @relation(fields: [year_id], references: [id])
+  mst_employees mst_employee @relation(fields: [employee_id], references: [id])
 }

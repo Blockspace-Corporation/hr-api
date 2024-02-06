@@ -38,3 +38,8 @@ export interface MstYearResponseError {
 export interface MstYearID {
     id: number;
   }
+
+export interface MstYearRequestBody {
+    id: number;
+  }
+
