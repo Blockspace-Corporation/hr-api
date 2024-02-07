@@ -184,7 +184,7 @@ CREATE TABLE `Company` (
     `number_of_branches` INTEGER NOT NULL,
     `Requirements` LONGTEXT NOT NULL,
     `is_special_holiday_without_logs` BOOLEAN NOT NULL,
-    `is_overtime_taxabale` BOOLEAN NOT NULL,
+    `is_overtime_taxable` BOOLEAN NOT NULL,
     `is_restday_taxable` BOOLEAN NOT NULL,
     `is_night_diff_taxable` BOOLEAN NOT NULL,
     `is_premium_taxable` BOOLEAN NOT NULL,

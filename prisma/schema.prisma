@@ -198,7 +198,7 @@ model Company {
   number_of_branches                             Int
   Requirements                                   String         @db.LongText 
   is_special_holiday_without_logs                Boolean
-  is_overtime_taxabale                           Boolean
+  is_overtime_taxable                            Boolean
   is_restday_taxable                             Boolean
   is_night_diff_taxable                          Boolean
   is_premium_taxable                             Boolean
