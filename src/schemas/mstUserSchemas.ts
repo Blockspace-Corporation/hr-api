@@ -14,14 +14,15 @@ export interface IUserLoginResponseError {
 
 export interface IUserRegisterRequestBody {
   id:                    number;
-  company_id:            number;
+  // company_id:            number;
   username:              string;
   password:              string;
+  confirmPassword:       string;
   fullname:              string;
   phone_number:          string;
-  created_by:            number;
+  // created_by:            number;
   create_date:           Date;
-  updated_by:            number;
+  // updated_by:            number;
   update_date:           Date;
   id_locked:             boolean;
   created:               mst_user[]

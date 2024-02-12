@@ -12,48 +12,88 @@ export const registerHandler = async (
   reply: FastifyReply
 ) => {
   const requestBody = request.body as IUserRegisterRequestBody;
-  if (
-    !requestBody ||
-    !requestBody.company_id ||
-    !requestBody.username ||
-    !requestBody.password ||       
-    !requestBody.fullname ||  
-    !requestBody.phone_number ||      
-    !requestBody.create_date ||
-    !requestBody.update_date ||
-    !requestBody.id_locked ||
-    !requestBody
 
-  ) {
-    return reply.badRequest(
-      `Invalid request body. Required fields: 'company_id', 'username', 'password', 'fullname', 'phone_number', 'create_date',  'update_date', 'id_locked'`
-    );
+  switch (true) {
+    case (requestBody.username == null || requestBody.username == ""):
+      return reply.badRequest(`Invalid request body. Username is empty.`);
+    case (requestBody.password == null || requestBody.password == ""):
+      return reply.badRequest(`Invalid request body. Password is empty.`);
+    case (requestBody.confirmPassword == null || requestBody.confirmPassword == ""):
+      return reply.badRequest(`Invalid request body. Confirm Password is empty.`);
+    case (requestBody.fullname == null || requestBody.fullname == ""):
+      return reply.badRequest(`Invalid request body. Fullname is empty.`);
+    case (requestBody.phone_number == null || requestBody.phone_number == ""):
+      return reply.badRequest(`Invalid request body. Phone Number is empty.`);
+    case (requestBody.create_date == null):
+      return reply.badRequest(`Invalid request body. Created Date is empty.`);
+    case (requestBody.update_date == null):
+      return reply.badRequest(`Invalid request body. Updated Date is empty.`);
+    default:
+      break;
   }
 
- 
+  let existingUser: any;
+    try {
+      existingUser = await MstUserRepository.getUserByUsername(requestBody.username);
+    } catch {
+      // pass
+    }
+  
+    if (existingUser) {
+      return reply.badRequest('Username is already taken.');
+    }
+  
+    const isMatchingPassword =
+      requestBody.password === requestBody.confirmPassword;
+  
+    if (!isMatchingPassword) {
+      return reply.badRequest('Passwords do not match');
+    }
+  
+    try {
+     const createmstUser = await MstUserRepository.createUser({
+      //   company_id: requestBody.company_id,
+        username: requestBody.username,
+        password: requestBody.password,
+        fullname: requestBody.fullname,
+        phone_number: requestBody.phone_number,
+      //   created_by: requestBody.created_by,
+        create_date: requestBody.create_date,
+      //   updated_by: requestBody.updated_by,
+        update_date: requestBody.update_date,
+        id_locked: requestBody.id_locked,
+      });
+      return reply.send({
+        message: 'Registration successful.',
+        data: createmstUser
+      });
+    } catch (error) {
+      reply.internalServerError(String(error || 'Unknown error occurred.'));
+    }
+  };
 
-  try {
-    MstUserRepository.createUser({
-      company_id: requestBody.company_id,
-      username: requestBody.username,  
-      password: requestBody.password,           
-      fullname: requestBody.fullname,        
-      phone_number:requestBody.phone_number,        
-      created_by:requestBody.created_by,
-      create_date:requestBody.create_date,
-      updated_by:requestBody.updated_by,
-      update_date:requestBody.update_date,
-      id_locked:requestBody.id_locked,
-    });
+//   try {
+//     MstUserRepository.createUser({
+//       company_id: requestBody.company_id,
+//       username: requestBody.username,  
+//       password: requestBody.password,           
+//       fullname: requestBody.fullname,        
+//       phone_number:requestBody.phone_number,        
+//       created_by:requestBody.created_by,
+//       create_date:requestBody.create_date,
+//       updated_by:requestBody.updated_by,
+//       update_date:requestBody.update_date,
+//       id_locked:requestBody.id_locked,
+//     });
 
-  } catch (error) {
-    reply.internalServerError(String(error || 'Unknown error occurred.'));
-  }
+//   } catch (error) {
+//     reply.internalServerError(String(error || 'Unknown error occurred.'));
+//   }
 
-  return reply.send({
-    message: 'Registration successful.',
-  });
-};
+//   return reply.send({
+//     message: 'Registration successful.',
+//   });
+// };
 
 export const readOneUserHandler = async (
   request: FastifyRequest,

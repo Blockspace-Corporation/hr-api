@@ -6,7 +6,7 @@ const mst_user: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
   
     fastify.post<{
         Querystring: IUserRegisterRequestBody;
-    }>('/', registerHandler);
+    }>('/register', registerHandler);
 
     fastify.put<{
         Querystring: FastifyRequest;
